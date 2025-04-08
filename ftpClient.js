@@ -1,3 +1,4 @@
+// ftpClient.js (korrigierte Version)
 import ftp from 'basic-ftp';
 import dotenv from 'dotenv';
 import fs from 'fs';
@@ -22,12 +23,14 @@ export async function fetchFromFTP() {
         });
         console.log("Connected to FTP server");
 
-        console.log("Listing directory contents of /remotePath...");
-        const list = await client.list('/remotePath');
+        // KORREKTUR 1: Richtiges Serververzeichnis
+        const remotePath = "/remotePath";
+        console.log(`Listing directory contents of ${remotePath}...`);
+        const list = await client.list(remotePath); // ← Geändert
         console.log("Directory contents:", list);
 
         if (list.length === 0) {
-            console.log("No files found in /remotePath on the FTP server.");
+            console.log(`No files found in ${remotePath} on the FTP server.`);
             return;
         }
 
@@ -38,7 +41,7 @@ export async function fetchFromFTP() {
         }
 
         console.log("Downloading files...");
-        await client.downloadToDir(localDir, "/remotePath");
+        await client.downloadToDir(localDir, remotePath); // ← Geändert
         console.log("Download complete");
 
         // Check if files are downloaded
@@ -54,4 +57,5 @@ export async function fetchFromFTP() {
     }
 }
 
-fetchFromFTP();
+// KORREKTUR 2: Automatischen Aufruf entfernt
+// fetchFromFTP(); ← AUSKOMMENTIERT/ENTFERNT
