@@ -3,5 +3,4 @@
 ![Bildbeschreibung](/public/Startseite.png)
 
 ## Server
-npm run build
-node deploy.js
+npm run build && node deploy.js
